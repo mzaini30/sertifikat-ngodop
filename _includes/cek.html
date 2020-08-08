@@ -1,0 +1,27 @@
+<template id="cek">
+	<div>
+		<br>
+		<div class="container">
+			<div class="card">
+				<div class="card-body">
+					<span v-if='ada'>
+						<strong>Sertifikat valid.</strong>
+					</span>
+					<span v-if='!ada'>
+						Sertifikat dengan id {% raw %}{{ $route.params.id }}{% endraw %} tidak ditemukan.
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+<script type="text/javascript">
+	cek = {
+		template: '#cek',
+		data(){
+			return {
+				ada: true
+			}
+		}
+	}
+</script>
