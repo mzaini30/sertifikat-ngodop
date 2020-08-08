@@ -1,0 +1,33 @@
+---
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sertifikat ODOP</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/vendor/bootstrap.min.css">
+</head>
+<body>
+	<div class="vue">
+		<router-view></router-view>
+	</div>
+	{% include beranda.html %}
+	<script type="text/javascript" src="/vendor/vue.min.js"></script>
+	<script type="text/javascript" src="/vendor/vue-router.min.js"></script>
+	<script type="text/javascript">
+		new Vue({
+			el: '.vue',
+			router: new VueRouter({
+				routes: [
+					{
+						path: '/',
+						component: beranda
+					}
+				]
+			})
+		})
+	</script>
+</body>
+</html>

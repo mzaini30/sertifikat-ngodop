@@ -1,0 +1,30 @@
+<template id="beranda">
+	<div>
+		<div class="container">
+			<br>
+			<h1 class="text-center">Sertifikat ODOP</h1>
+			<hr>
+			<form @submit.prevent='cek()'>
+				<div class="form-group">
+					<label>Silahkan masukkan ID</label>
+					<input type="search" required="" v-model='id' class="form-control" name="">
+				</div>
+			</form>
+		</div>
+	</div>
+</template>
+<script type="text/javascript">
+	beranda = {
+		template: '#beranda',
+		data(){
+			return {
+				id: ''
+			}
+		},
+		methods: {
+			cek(){
+				this.$router.push(this.id)
+			}
+		}
+	}
+</script>
