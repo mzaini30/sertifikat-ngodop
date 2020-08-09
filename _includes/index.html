@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sertifikat ODOP</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/vendor/bootstrap.min.css">
+</head>
+<body>
+	<div class="vue">
+		<router-view></router-view>
+	</div>
+	<div class="progress-loading sembunyi">
+      <div class="indeterminate"></div>
+    </div>
+	<link rel='stylesheet' href='/vendor/progress.css'>
+	<script src='/vendor/progress.js'></script>
+	{% include beranda.html %}
+	{% include cek.html %}
+	<script type="text/javascript" src="/vendor/vue.min.js"></script>
+	<script type="text/javascript" src="/vendor/vue-router.min.js"></script>
+	<script type="text/javascript">
+		api = 'http://localhost/sertifikat-odop'
+		new Vue({
+			el: '.vue',
+			router: new VueRouter({
+				mode: 'history',
+				routes: [
+					{
+						path: '/',
+						component: beranda
+					},
+					{
+						path: '/:id',
+						component: cek
+					}
+				]
+			})
+		})
+	</script>
+</body>
+</html>
