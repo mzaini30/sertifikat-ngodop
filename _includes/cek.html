@@ -6,12 +6,12 @@
 				<div class="card-body">
 					<span v-if='data.length != 0'>
 						<strong>Sertifikat valid.</strong><br>
-						Nama &nbsp;&nbsp; : {% raw %}{{ data.nama }}{% endraw %}<br>
-						Event &nbsp;&nbsp;&nbsp; : {% raw %}{{ data.event }}{% endraw %}<br>
-						Sebagai : {% raw %}{{ data.sebagai }}{% endraw %}
+						Nama &nbsp;&nbsp; : << data.nama >><br>
+						Event &nbsp;&nbsp;&nbsp; : << data.event >><br>
+						Sebagai : << data.sebagai >>
 					</span>
 					<span v-if='data.length == 0'>
-						Sertifikat dengan id {% raw %}{{ $route.params.id }}{% endraw %} tidak ditemukan.
+						Sertifikat dengan id << $route.params.id >> tidak ditemukan.
 					</span>
 				</div>
 			</div>
@@ -21,6 +21,7 @@
 <script type="text/javascript">
 	cek = {
 		template: '#cek',
+		delimiters: ['<<', '>>'],
 		data(){
 			return {
 				data: {},
