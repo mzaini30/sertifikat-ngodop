@@ -17,6 +17,8 @@
 	<script src='/vendor/progress.js'></script>
 	{% include beranda.html %}
 	{% include cek.html %}
+	{% include admin.html %}
+	{% include login.html %}
 	<script type="text/javascript" src="/vendor/vue.min.js"></script>
 	<script type="text/javascript" src="/vendor/vue-router.min.js"></script>
 	<script type="text/javascript">
@@ -29,6 +31,14 @@
 					{
 						path: '/',
 						component: beranda
+					},
+					{
+						path: '/admin',
+						component: admin
+					},
+					{
+						path: '/login',
+						component: login
 					},
 					{
 						path: '/:id',

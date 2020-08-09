@@ -4,13 +4,13 @@
 		<div class="container">
 			<div class="card">
 				<div class="card-body">
-					<span v-if='ada'>
+					<span v-if='data.length != 0'>
 						<strong>Sertifikat valid.</strong><br>
-						Nama &nbsp;&nbsp; : Zen<br>
-						Event &nbsp;&nbsp;&nbsp; : Main bola<br>
-						Sebagai : Pembicara
+						Nama &nbsp;&nbsp; : {% raw %}{{ data.nama }}{% endraw %}<br>
+						Event &nbsp;&nbsp;&nbsp; : {% raw %}{{ data.event }}{% endraw %}<br>
+						Sebagai : {% raw %}{{ data.sebagai }}{% endraw %}
 					</span>
-					<span v-if='!ada'>
+					<span v-if='data.length == 0'>
 						Sertifikat dengan id {% raw %}{{ $route.params.id }}{% endraw %} tidak ditemukan.
 					</span>
 				</div>
@@ -23,7 +23,24 @@
 		template: '#cek',
 		data(){
 			return {
-				ada: false
+				data: {},
+			}
+		},
+		methods: {
+			cek(){
+				loading()
+				fetch(`${api}/sertifikat.php/cek/${this.$route.params.id}`).then(x => x.json()).then(data => {
+					this.data = data
+					loading_selesai()
+				})
+			}
+		},
+		mounted(){
+			this.cek()
+		},
+		watch: {
+			$route(){
+				this.cek()
 			}
 		}
 	}

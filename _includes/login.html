@@ -1,0 +1,56 @@
+<template id="login">
+	<div>
+		<div class="container">
+			<br>
+			<h1 class="text-center">Login Admin Sertifikat ODOP</h1>
+			<hr>
+			<form @submit.prevent='cek()'>
+				<div class="form-group">
+					<label>Username</label>
+					<input v-model='username' ref='username' type="search" class="form-control" name="">
+				</div>
+				<div class="form-group">
+					<label>Password</label>
+					<input type="password" v-model='password' class="form-control" name="">
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary" value="Login" name="">
+				</div>
+			</form>
+		</div>
+	</div>
+</template>
+<script type="text/javascript">
+	login = {
+		template: '#login',
+		data(){
+			return {
+				username: '',
+				password: ''
+			}
+		},
+		mounted(){
+			this.$refs.username.focus()
+		},
+		methods: {
+			cek(){
+				loading()
+				body = new FormData
+				body.append('username', this.username)
+				body.append('password', this.password)
+				fetch(`${api}/login.php/cek`, {
+					method: 'post',
+					body
+				}).then(x => x.json()).then(data => {
+					this.username = ''
+					this.password = ''
+					if (data != 'salah') {
+						localStorage.setItem('token_sertifikat', data)
+						this.$router.push('/admin')
+					}
+					loading_selesai()
+				})
+			}
+		}
+	}
+</script>
