@@ -35,13 +35,7 @@
 		methods: {
 			cek(){
 				loading()
-				body = new FormData
-				body.append('username', this.username)
-				body.append('password', this.password)
-				fetch(`${api}/login.php/cek`, {
-					method: 'post',
-					body
-				}).then(x => x.json()).then(data => {
+				fetch(`${api}/login.php/cek/${btoa(this.username)}/${btoa(this.password)}`).then(x => x.json()).then(data => {
 					this.username = ''
 					this.password = ''
 					if (data != 'salah') {
