@@ -5,7 +5,60 @@
 			<h1 class="text-center">Kelola Sertifikat</h1>
 			<hr>
 			<div class="form-group">
-				<button class="btn btn-danger">Logout</button>
+				<router-link to='/' class='btn btn-info'>Beranda</router-link>
+				<button @click='keluar()' class="btn btn-danger">Logout</button>
+			</div>
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Nama</th>
+									<th>Event</th>
+									<th>Sebagai</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for='x in data'>
+									<td><< x.id >></td>
+									<td><< x.nama >></td>
+									<td><< x.event >></td>
+									<td><< x.sebagai >></td>
+									<td>
+										<button class="btn btn-danger">Hapus</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<p><strong>Tambah Data</strong></p>
+					<div class="card">
+						<div class="card-body">
+							<form @submit.prevent='tambah()'>
+								<div class="form-group">
+									<label>Nama</label>
+									<input type="search" ref='nama' v-model='nama' class="form-control" name="">
+								</div>
+								<div class="form-group">
+									<label>Event</label>
+									<input type="search" v-model='event' class="form-control" name="">
+								</div>
+								<div class="form-group">
+									<label>Sebagai</label>
+									<input type="search" v-model='sebagai' class="form-control" name="">
+								</div>
+								<div class="form-group">
+									<input type="submit" value="Tambah" class="btn btn-success" name="">
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -13,10 +66,51 @@
 <script type="text/javascript">
 	admin = {
 		template: '#admin',
+		methods: {
+			keluar(){
+				localStorage.removeItem('token_sertifikat')
+				this.$router.push('/login')
+			},
+			tampil_data(){
+				loading()
+				fetch(`${api}/admin.php/${localStorage.token_sertifikat}/sertifikat`).then(x => x.json()).then(data => {
+					this.data = data
+					loading_selesai()
+				})
+			},
+			tambah(){
+				body = new FormData
+				body.append('nama', this.nama)
+				body.append('event', this.event)
+				body.append('sebagai', this.sebagai)
+				loading()
+				fetch(`${api}/admin.php/${localStorage.token_sertifikat}/tambah`, {
+					method: 'post',
+					body
+				}).then(x => {
+					this.nama = ''
+					this.event = ''
+					this.sebagai = ''
+					this.tampil_data()
+					this.$refs.nama.focus()
+					loading_selesai()
+				})
+			}
+		},
+		delimiters: ['<<', '>>'],
+		data(){
+			return {
+				data: [],
+				nama: '',
+				event: '',
+				sebagai: ''
+			}
+		},
 		mounted(){
 			if (!localStorage.token_sertifikat) {
 				this.$router.push('/login')
 			}
+			this.tampil_data()
 		}
 	}
 </script>
