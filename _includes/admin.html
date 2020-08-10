@@ -28,7 +28,7 @@
 									<td><< x.event >></td>
 									<td><< x.sebagai >></td>
 									<td>
-										<button class="btn btn-danger">Hapus</button>
+										<button class="btn btn-danger" @click='hapus(x.id)'>Hapus</button>
 									</td>
 								</tr>
 							</tbody>
@@ -42,18 +42,18 @@
 							<form @submit.prevent='tambah()'>
 								<div class="form-group">
 									<label>Nama</label>
-									<input type="search" ref='nama' v-model='nama' class="form-control" name="">
+									<input type="search" ref='nama' v-model='nama' class="form-control" name="" required="">
 								</div>
 								<div class="form-group">
 									<label>Event</label>
-									<input type="search" v-model='event' class="form-control" name="">
+									<input type="search" v-model='event' class="form-control" name="" required="">
 								</div>
 								<div class="form-group">
 									<label>Sebagai</label>
-									<input type="search" v-model='sebagai' class="form-control" name="">
+									<input type="search" v-model='sebagai' class="form-control" name="" required="">
 								</div>
 								<div class="form-group">
-									<input type="submit" value="Tambah" class="btn btn-success" name="">
+									<input type="submit" value="Tambah" class="btn btn-success" name="" required="">
 								</div>
 							</form>
 						</div>
@@ -95,6 +95,16 @@
 					this.$refs.nama.focus()
 					loading_selesai()
 				})
+			},
+			hapus(id){
+				tanya = confirm(`Hapus ID ${id} kah?`)
+				if (tanya) {
+					loading()
+					fetch(`${api}/admin.php/${localStorage.token_sertifikat}/hapus/${id}`).then(x => {
+						this.tampil_data()
+						loading_selesai()
+					})
+				}
 			}
 		},
 		delimiters: ['<<', '>>'],
