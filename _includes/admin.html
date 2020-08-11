@@ -41,6 +41,10 @@
 						<div class="card-body">
 							<form @submit.prevent='tambah()'>
 								<div class="form-group">
+									<label>ID</label>
+									<input type="tel" v-model='id' name="" class="form-control">
+								</div>
+								<div class="form-group">
 									<label>Nama</label>
 									<input type="search" ref='nama' v-model='nama' class="form-control" name="" required="">
 								</div>
@@ -78,8 +82,16 @@
 					loading_selesai()
 				})
 			},
+			ambil_id(){
+				loading()
+				fetch(`${api}/admin.php/${localStorage.token_sertifikat}/id-terakhir`).then(x => x.json()).then(data => {
+					this.id = data
+					loading_selesai()
+				})
+			},
 			tambah(){
 				body = new FormData
+				body.append('id', this.id)
 				body.append('nama', this.nama)
 				body.append('event', this.event)
 				body.append('sebagai', this.sebagai)
@@ -88,6 +100,7 @@
 					method: 'post',
 					body
 				}).then(x => {
+					this.ambil_id()
 					this.nama = ''
 					this.event = ''
 					this.sebagai = ''
@@ -111,6 +124,7 @@
 		data(){
 			return {
 				data: [],
+				id: '',
 				nama: '',
 				event: '',
 				sebagai: ''
@@ -120,7 +134,8 @@
 			if (!localStorage.token_sertifikat) {
 				this.$router.push('/login')
 			} else {
-		 	this.tampil_data()
+		 		this.tampil_data()
+		 		this.ambil_id()
 			}
 		}
 	}
