@@ -119,8 +119,9 @@
 		mounted(){
 			if (!localStorage.token_sertifikat) {
 				this.$router.push('/login')
+			} else {
+		 	this.tampil_data()
 			}
-			this.tampil_data()
 		}
 	}
 </script>
